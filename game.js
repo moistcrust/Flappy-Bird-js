@@ -74,7 +74,7 @@ function drawPipes() {
 
         ctx.drawImage(pipe.img, pipeObj.x, pipeObj.height + pipeGap, pipe.width, canvas.height - (pipeObj.height + pipeGap));
 
-        pipeObj.x -= 1;
+        pipeObj.x -= 3;
 
         if (pipeObj.x + pipe.width < 0) {
             pipes.shift();
@@ -112,9 +112,10 @@ function draw() {
     if (frameCount % 400 === 0) {
         spawnPipe();
     }
-
-    requestAnimationFrame(draw);
 }
+
+// Run the game loop every 16ms (~60fps)
+let gameLoop = setInterval(draw, 16);
 
 window.addEventListener("keydown", function(event) {
     if (event.code === "Space") {
@@ -123,7 +124,6 @@ window.addEventListener("keydown", function(event) {
 });
 
 window.addEventListener('resize', resizeCanvas);
-
 
 Promise.all(bird.frames.map(img => new Promise(resolve => img.onload = resolve)))
     .then(() => {
